@@ -2,8 +2,8 @@
 import { RiTodoFill, RiDeleteBin2Line } from 'react-icons/ri';
 import { FaCheck } from 'react-icons/fa';
 import styles from './Todo.module.css';
-import { TodoProps } from '@/app/page';
 import { ChangeEvent, useState } from 'react';
+import { TodoProps } from '@/utils/types';
 
 export default function Todo({
   todo,
@@ -14,7 +14,7 @@ export default function Todo({
   dragOverHandler,
   dropHandler,
 }: TodoProps) {
-  const [inputValue, setInputValue] = useState(todo?.text || '');
+  const [inputValue, setInputValue] = useState(todo.text);
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -33,13 +33,13 @@ export default function Todo({
       <input className={styles.todoText} value={inputValue} onChange={onInputChange} />
       <RiDeleteBin2Line
         onClick={() => {
-          deleteTodo(todo?.id || '');
+          deleteTodo(todo.id);
         }}
         className={styles.deleteIcon}
       />
       <FaCheck
         onClick={() => {
-          toggleTodo(todo?.id || '');
+          toggleTodo(todo.id);
         }}
         className={styles.checkIcon}
       />

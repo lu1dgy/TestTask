@@ -1,67 +1,55 @@
 'use client';
-import uuid4 from 'uuid4';
-import { useState } from 'react';
-
+import uuidv4 from 'uuid4';
 import TodosActions from '@/components/Todos/TodoActions';
 import TodoForm from '@/components/Todos/TodoForm';
 import TodoList from '@/components/Todos/TodoList';
-
-export interface Todo {
-  id: string;
-  text: string;
-  isCompleted: boolean;
-  order: number;
-}
-
-export interface TodoProps {
-  todo: Todo;
-  deleteTodo: (id: string) => void;
-  toggleTodo: (id: string) => void;
-  dragStartHandler: (event: React.DragEvent<HTMLLIElement>, todo: Todo) => void;
-  dragEndHandler: (event: React.DragEvent<HTMLLIElement>) => void;
-  dragOverHandler: (event: React.DragEvent<HTMLLIElement>) => void;
-  dropHandler: (event: React.DragEvent<HTMLLIElement>, todo: Todo) => void;
-}
-
-export interface TodoListProps {
-  todos: Todo[];
-  toggleTodo: (id: string) => void;
-  deleteTodo: (id: string) => void;
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-}
+import {
+  addTodo,
+  deleteTodo,
+  toggleTodo,
+  resetTodos,
+  deleteCompletedTodos,
+  selectTodos,
+  selectCompletedTodosCount,
+  setTodos,
+} from '@/redux/todos/todos';
+import { useDispatch, useSelector } from 'react-redux';
+import { Todo } from '@/utils/types';
 
 export default function Home() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const todos = useSelector(selectTodos);
+  const completedTodosCount = useSelector(selectCompletedTodosCount);
+  const dispatch = useDispatch();
 
   const addTodoHandler = (text: string) => {
-    const newTodo: Todo = {
+    const newTodo = {
       text,
       isCompleted: false,
-      id: uuid4(),
+      id: uuidv4(),
       order: todos.length + 1,
     };
-    setTodos([...todos, newTodo]);
+    dispatch(addTodo(newTodo));
   };
 
   const deleteTodoHandler = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch(deleteTodo(id));
   };
 
   const toggleTodoHandler = (id: string) => {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo))
-    );
+    dispatch(toggleTodo(id));
   };
 
   const resetTodosHandler = () => {
-    setTodos([]);
+    dispatch(resetTodos());
   };
 
-  const deleteCompletedTodos = () => {
-    setTodos(todos.filter((todo) => !todo.isCompleted));
+  const deleteCompletedTodosHandler = () => {
+    dispatch(deleteCompletedTodos());
   };
 
-  const completedTodosCount = todos.filter((todo) => todo.isCompleted).length;
+  const setTodosHandler = (todo: Todo) => {
+    dispatch(setTodos(todo));
+  };
 
   return (
     <>
@@ -70,14 +58,14 @@ export default function Home() {
         <TodosActions
           completedTodosExist={!!completedTodosCount}
           resetTodos={resetTodosHandler}
-          deleteCompletedTodos={deleteCompletedTodos}
+          deleteCompletedTodos={deleteCompletedTodosHandler}
         />
       )}
       <TodoList
         deleteTodo={deleteTodoHandler}
         toggleTodo={toggleTodoHandler}
         todos={todos}
-        setTodos={setTodos}
+        setTodos={setTodosHandler}
       />
       {completedTodosCount > 0 && (
         <h2>{`You have completed ${completedTodosCount} ${

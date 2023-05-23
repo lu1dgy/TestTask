@@ -1,4 +1,4 @@
-import { TodoListProps, Todo } from '@/app/page';
+import { Todo, TodoListProps } from '@/utils/types';
 import { useState } from 'react';
 import TodoComponent from './Todo';
 import styles from './TodoList.module.css';
@@ -6,19 +6,22 @@ import styles from './TodoList.module.css';
 export default function TodoList({ todos, deleteTodo, toggleTodo, setTodos }: TodoListProps) {
   const [currentCard, setCurrentCard] = useState<Todo | null>(null);
 
+  const changeOpacity = (e: React.DragEvent<HTMLLIElement>, opacity: string) => {
+    const nearestLi = e.currentTarget as HTMLLIElement;
+    nearestLi.style.opacity = opacity;
+  };
+
   const dragStartHandler = (e: React.DragEvent<HTMLLIElement>, todo: Todo) => {
     setCurrentCard(todo);
   };
 
   const dragEndHandler = (e: React.DragEvent<HTMLLIElement>) => {
-    const nearestLi = e.currentTarget as HTMLLIElement;
-    nearestLi.style.opacity = '1';
+    changeOpacity(e, '1');
   };
 
   const dragOverHandler = (e: React.DragEvent<HTMLLIElement>) => {
     e.preventDefault();
-    const nearestLi = e.currentTarget as HTMLLIElement;
-    nearestLi.style.opacity = '0.5';
+    changeOpacity(e, '0.5');
   };
 
   const dropHandler = (e: React.DragEvent<HTMLLIElement>, todo: Todo) => {
@@ -35,8 +38,7 @@ export default function TodoList({ todos, deleteTodo, toggleTodo, setTodos }: To
         return el;
       })
     );
-    const nearestLi = e.currentTarget as HTMLLIElement;
-    nearestLi.style.opacity = '1';
+    changeOpacity(e, '1');
   };
 
   const sortCards = (todoA: Todo, todoB: Todo) => {
@@ -46,25 +48,27 @@ export default function TodoList({ todos, deleteTodo, toggleTodo, setTodos }: To
       return -1;
     }
   };
-  console.log(todos);
 
   return (
     <ul className={styles.todoListContainer}>
       {!todos.length && <h2>Todo list is empty</h2>}
-      {todos.sort(sortCards).map((todo) => {
-        return (
-          <TodoComponent
-            dragStartHandler={dragStartHandler}
-            dragEndHandler={dragEndHandler}
-            dragOverHandler={dragOverHandler}
-            dropHandler={dropHandler}
-            key={todo.id}
-            todo={todo}
-            deleteTodo={deleteTodo}
-            toggleTodo={toggleTodo}
-          />
-        );
-      })}
+      {todos
+        .slice()
+        .sort(sortCards)
+        .map((todo) => {
+          return (
+            <TodoComponent
+              dragStartHandler={dragStartHandler}
+              dragEndHandler={dragEndHandler}
+              dragOverHandler={dragOverHandler}
+              dropHandler={dropHandler}
+              key={todo.id}
+              todo={todo}
+              deleteTodo={deleteTodo}
+              toggleTodo={toggleTodo}
+            />
+          );
+        })}
     </ul>
   );
 }
