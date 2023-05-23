@@ -1,5 +1,6 @@
 'use client';
 import uuidv4 from 'uuid4';
+import { withAuth } from '@/components/hoc/ProtectedRoute';
 import TodosActions from '@/components/Todos/TodoActions';
 import TodoForm from '@/components/Todos/TodoForm';
 import TodoList from '@/components/Todos/TodoList';
@@ -15,8 +16,10 @@ import {
 } from '@/redux/todos/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { Todo } from '@/utils/types';
+import { NextPage } from 'next';
+import Header from '@/components/Header';
 
-export default function Home() {
+const Home: NextPage = () => {
   const todos = useSelector(selectTodos);
   const completedTodosCount = useSelector(selectCompletedTodosCount);
   const dispatch = useDispatch();
@@ -53,6 +56,7 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       <h1>TodoApp</h1>
       <TodoForm addTodo={addTodoHandler} />
       {!!todos.length && (
@@ -75,4 +79,6 @@ export default function Home() {
       )}
     </>
   );
-}
+};
+
+export default withAuth(Home);

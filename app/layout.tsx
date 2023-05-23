@@ -17,7 +17,6 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
   return (
     <html lang='en'>
       <body>
-        <Header />
         <Provider store={store}>
           <main className='App'>{children}</main>
         </Provider>
