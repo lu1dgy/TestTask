@@ -5,7 +5,7 @@ import styles from './Todo.module.css';
 import { ChangeEvent, useState } from 'react';
 import { TodoProps } from '@/utils/types';
 import { useDispatch } from 'react-redux';
-import { updateTodoText } from '@/redux/todos/todos';
+import { updateTodoText } from '@/redux/todos';
 
 export default function Todo({
   todo,

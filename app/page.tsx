@@ -13,11 +13,10 @@ import {
   selectTodos,
   selectCompletedTodosCount,
   setTodos,
-} from '@/redux/todos/todos';
+} from '@/redux/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { Todo } from '@/utils/types';
 import { NextPage } from 'next';
-import Header from '@/components/Header';
 
 const Home: NextPage = () => {
   const todos = useSelector(selectTodos);
@@ -56,7 +55,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Header />
       <h1>TodoApp</h1>
       <TodoForm addTodo={addTodoHandler} />
       {!!todos.length && (

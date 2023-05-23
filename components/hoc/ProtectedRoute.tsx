@@ -5,7 +5,8 @@ export function withAuth<T>(WrappedComponent: React.ComponentType<T>) {
   const ComponentWithAuth = (props: T) => {
     const router = useRouter();
 
-    const isAuthenticated = false;
+    //todo: add auth logic from api
+    const isAuthenticated = true;
 
     useEffect(() => {
       if (!isAuthenticated) {

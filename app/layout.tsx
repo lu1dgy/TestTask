@@ -2,12 +2,12 @@
 import { ReactNode } from 'react';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+
 import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import store from '@/redux/store';
 
 import './globals.css';
-import { Provider } from 'react-redux';
-import store from '@/redux/store';
 
 interface RootLayoutProps extends AppProps {
   children: ReactNode;
