@@ -1,9 +1,10 @@
 'use client';
+import uuid4 from 'uuid4';
+import { useState } from 'react';
+
 import TodosActions from '@/components/Todos/TodoActions';
 import TodoForm from '@/components/Todos/TodoForm';
-import uuid4 from 'uuid4';
 import TodoList from '@/components/Todos/TodoList';
-import { useState } from 'react';
 
 export interface Todo {
   id: string;

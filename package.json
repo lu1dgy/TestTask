@@ -20,5 +20,8 @@
     "react-icons": "^4.8.0",
     "typescript": "5.0.4",
     "uuid4": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/uuid4": "^2.0.0"
   }
 }
