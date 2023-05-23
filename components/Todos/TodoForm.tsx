@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styles from './TodoForm.module.css';
 import Button from '../UI/Button';
-export default function TodoForm({ addTodo }) {
+
+interface TodoFormProps {
+  addTodo: (text: string) => void;
+}
+
+export default function TodoForm({ addTodo }: TodoFormProps) {
   const [text, setText] = useState('');
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     addTodo(text);
     setText('');
@@ -14,13 +19,16 @@ export default function TodoForm({ addTodo }) {
     <div className={styles.todoFormContainer}>
       <form onSubmit={onSubmitHandler}>
         <input
-          placeholder="Enter new todo"
-          type="text"
+          placeholder='Enter new todo'
+          type='text'
           value={text}
+          minLength={1}
+          required
           onChange={(e) => {
             setText(e.target.value);
-          }}></input>
-        <Button title="Submit" type="submit">
+          }}
+        />
+        <Button title='Submit' type='submit'>
           Submit
         </Button>
       </form>

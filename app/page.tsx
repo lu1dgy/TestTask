@@ -9,16 +9,24 @@ export interface Todo {
   id: string;
   text: string;
   isCompleted: boolean;
+  order: number;
 }
 
 export interface TodoProps {
-  todo?: Todo;
+  todo: Todo;
   deleteTodo: (id: string) => void;
   toggleTodo: (id: string) => void;
+  dragStartHandler: (event: React.DragEvent<HTMLLIElement>, todo: Todo) => void;
+  dragEndHandler: (event: React.DragEvent<HTMLLIElement>) => void;
+  dragOverHandler: (event: React.DragEvent<HTMLLIElement>) => void;
+  dropHandler: (event: React.DragEvent<HTMLLIElement>, todo: Todo) => void;
 }
 
-export interface TodoListProps extends TodoProps {
+export interface TodoListProps {
   todos: Todo[];
+  toggleTodo: (id: string) => void;
+  deleteTodo: (id: string) => void;
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
 export default function Home() {
@@ -29,6 +37,7 @@ export default function Home() {
       text,
       isCompleted: false,
       id: uuid4(),
+      order: todos.length + 1,
     };
     setTodos([...todos, newTodo]);
   };
@@ -63,7 +72,12 @@ export default function Home() {
           deleteCompletedTodos={deleteCompletedTodos}
         />
       )}
-      <TodoList deleteTodo={deleteTodoHandler} toggleTodo={toggleTodoHandler} todos={todos} />
+      <TodoList
+        deleteTodo={deleteTodoHandler}
+        toggleTodo={toggleTodoHandler}
+        todos={todos}
+        setTodos={setTodos}
+      />
       {completedTodosCount > 0 && (
         <h2>{`You have completed ${completedTodosCount} ${
           completedTodosCount > 1 ? 'todos' : 'todo'
