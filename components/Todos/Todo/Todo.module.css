@@ -16,6 +16,7 @@
   font-size: 1.2rem;
   background-color: transparent;
   outline: none;
+  color: rgb(103, 88, 88);
   border: 0;
 }
 
@@ -58,4 +59,10 @@
 
 .deleteIcon:hover {
   color: red;
+}
+
+@media screen and (max-width: 767px) {
+  .todoText {
+    font-size: 1rem;
+  }
 }

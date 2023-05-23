@@ -1,6 +1,6 @@
 import { Todo, TodoListProps } from '@/utils/types';
 import { useState } from 'react';
-import TodoComponent from './Todo';
+import TodoComponent from '../Todo';
 import styles from './TodoList.module.css';
 
 export default function TodoList({ todos, deleteTodo, toggleTodo, setTodos }: TodoListProps) {

@@ -13,10 +13,13 @@
   width: 45%;
   height: 30px;
   font-size: 1.3rem;
-}
-
-.todoFormContainer input {
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .todoFormContainer input {
+    font-size: 1rem;
+  }
 }
