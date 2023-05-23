@@ -34,11 +34,25 @@ const todosSlice = createSlice({
     setTodos: (state, action) => {
       state.todos = action.payload;
     },
+    updateTodoText: (state, action: PayloadAction<{ id: string; text: string }>) => {
+      const { id, text } = action.payload;
+      const todo = state.todos.find((todo) => todo.id === id);
+      if (todo) {
+        todo.text = text;
+      }
+    },
   },
 });
 
-export const { addTodo, deleteTodo, toggleTodo, resetTodos, deleteCompletedTodos, setTodos } =
-  todosSlice.actions;
+export const {
+  addTodo,
+  deleteTodo,
+  toggleTodo,
+  resetTodos,
+  deleteCompletedTodos,
+  setTodos,
+  updateTodoText,
+} = todosSlice.actions;
 
 export const selectTodos = (state: RootState) => state.todosSlice.todos;
 export const selectCompletedTodosCount = (state: RootState) =>

@@ -53,6 +53,7 @@ export default function Home() {
 
   return (
     <>
+      <h1>TodoApp</h1>
       <TodoForm addTodo={addTodoHandler} />
       {!!todos.length && (
         <TodosActions

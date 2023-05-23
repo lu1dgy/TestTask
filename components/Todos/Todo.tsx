@@ -4,6 +4,8 @@ import { FaCheck } from 'react-icons/fa';
 import styles from './Todo.module.css';
 import { ChangeEvent, useState } from 'react';
 import { TodoProps } from '@/utils/types';
+import { useDispatch } from 'react-redux';
+import { updateTodoText } from '@/redux/todos/todos';
 
 export default function Todo({
   todo,
@@ -14,9 +16,14 @@ export default function Todo({
   dragOverHandler,
   dropHandler,
 }: TodoProps) {
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState(todo.text);
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+  };
+
+  const handleInputBlur = () => {
+    dispatch(updateTodoText({ id: todo.id, text: inputValue }));
   };
 
   return (
@@ -30,7 +37,12 @@ export default function Todo({
       draggable={true}
     >
       <RiTodoFill className={styles.todoIcon} />
-      <input className={styles.todoText} value={inputValue} onChange={onInputChange} />
+      <input
+        className={styles.todoText}
+        value={inputValue}
+        onChange={onInputChange}
+        onBlur={handleInputBlur}
+      />
       <RiDeleteBin2Line
         onClick={() => {
           deleteTodo(todo.id);
