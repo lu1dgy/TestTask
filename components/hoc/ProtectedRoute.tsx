@@ -2,8 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export function withAuth<T extends {}>(WrappedComponent: React.ComponentType<T>) {
-  const ComponentWithAuth = (props: React.PropsWithChildren<T>) => {
+const withAuth = <T extends {}>(WrappedComponent: React.ComponentType<T>) => {
+  const ComponentWithAuth = (props: T) => {
     const router = useRouter();
 
     //todo: add auth logic from api
@@ -15,7 +15,7 @@ export function withAuth<T extends {}>(WrappedComponent: React.ComponentType<T>)
       }
     }, [isAuthenticated, router]);
 
-    return isAuthenticated ? <WrappedComponent {...props} /> : null;
+    return isAuthenticated && <WrappedComponent {...props} />;
   };
 
   ComponentWithAuth.displayName = `withAuth(${
@@ -23,4 +23,6 @@ export function withAuth<T extends {}>(WrappedComponent: React.ComponentType<T>)
   })`;
 
   return ComponentWithAuth;
-}
+};
+
+export default withAuth;

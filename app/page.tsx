@@ -1,9 +1,12 @@
 'use client';
 import uuidv4 from 'uuid4';
-import { withAuth } from '@/components/hoc/ProtectedRoute';
+import { NextPage } from 'next';
+import { useDispatch, useSelector } from 'react-redux';
 import TodosActions from '@/components/Todos/TodoActions';
 import TodoForm from '@/components/Todos/TodoForm';
 import TodoList from '@/components/Todos/TodoList';
+import withAuth from '@/components/hoc/ProtectedRoute';
+import { Todo } from '@/utils/types';
 import {
   addTodo,
   deleteTodo,
@@ -14,9 +17,6 @@ import {
   selectCompletedTodosCount,
   setTodos,
 } from '@/redux/todos';
-import { useDispatch, useSelector } from 'react-redux';
-import { Todo } from '@/utils/types';
-import { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const todos = useSelector(selectTodos);
