@@ -18,7 +18,7 @@ const TodoForm = ({ addTodo }: TodoFormProps) => {
     <div className={styles.todoFormContainer}>
       <form onSubmit={onSubmitHandler}>
         <input
-          placeholder='Enter new todo'
+          placeholder='הכנס משימה חדשה'
           type='text'
           value={text}
           minLength={1}
@@ -28,7 +28,7 @@ const TodoForm = ({ addTodo }: TodoFormProps) => {
           }}
         />
         <Button title='Submit' type='submit'>
-          Submit
+          שלח
         </Button>
       </form>
     </div>

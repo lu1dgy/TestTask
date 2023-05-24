@@ -51,7 +51,7 @@ export default function TodoList({ todos, deleteTodo, toggleTodo, setTodos }: To
 
   return (
     <ul className={styles.todoListContainer}>
-      {!todos.length && <h2>Todo list is empty</h2>}
+      {!todos.length && <h2>רשימת המשימות ריקה</h2>}
       {todos
         .slice()
         .sort(sortCards)

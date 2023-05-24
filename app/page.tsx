@@ -55,7 +55,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1>TodoApp</h1>
+      <h1>אפליקציית המשימות</h1>
       <TodoForm addTodo={addTodoHandler} />
       {!!todos.length && (
         <TodosActions
@@ -71,9 +71,9 @@ const Home: NextPage = () => {
         setTodos={setTodosHandler}
       />
       {completedTodosCount > 0 && (
-        <h2>{`You have completed ${completedTodosCount} ${
-          completedTodosCount > 1 ? 'todos' : 'todo'
-        }`}</h2>
+        <h2>
+          {completedTodosCount > 1 ? `השלמת ${completedTodosCount} משימות` : 'השלמת משימה אחת'}{' '}
+        </h2>
       )}
     </>
   );

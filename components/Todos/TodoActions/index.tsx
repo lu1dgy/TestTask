@@ -8,11 +8,11 @@ interface TodoActionsProps {
   completedTodosExist: boolean;
 }
 
-export default function TodoActions({
+const TodoActions = ({
   resetTodos,
   deleteCompletedTodos,
   completedTodosExist,
-}: TodoActionsProps): JSX.Element {
+}: TodoActionsProps): JSX.Element => {
   return (
     <div className={styles.todosActionsContainer}>
       <Button onClick={resetTodos} title='Reset todos'>
@@ -27,4 +27,6 @@ export default function TodoActions({
       </Button>
     </div>
   );
-}
+};
+
+export default TodoActions;
