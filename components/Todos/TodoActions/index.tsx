@@ -15,12 +15,12 @@ const TodoActions = ({
 }: TodoActionsProps): JSX.Element => {
   return (
     <div className={styles.todosActionsContainer}>
-      <Button onClick={resetTodos} title='Reset todos'>
+      <Button onClick={resetTodos} title='איפוס משימות'>
         <RiRefreshLine />
       </Button>
       <Button
         onClick={deleteCompletedTodos}
-        title='Clear completed todos'
+        title='מחק משימות שהושלמו'
         disabled={!completedTodosExist}
       >
         <RiDeleteBin2Line />
