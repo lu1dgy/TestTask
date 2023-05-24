@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export function withAuth<T extends {}>(WrappedComponent: React.ComponentType<T>) {
-  const ComponentWithAuth = (props: T & React.Attributes) => {
+  const ComponentWithAuth = (props: React.PropsWithChildren<T>) => {
     const router = useRouter();
 
     //todo: add auth logic from api
