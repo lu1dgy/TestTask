@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'; // Update import statement
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export function withAuth<T extends {}>(WrappedComponent: React.ComponentType<T>) {
