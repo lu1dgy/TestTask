@@ -15,7 +15,7 @@ interface RootLayoutProps extends AppProps {
 
 const RootLayout: NextPage<RootLayoutProps> = ({ children }) => {
   return (
-    <html lang='en'>
+    <html lang='he'>
       <body>
         <Provider store={store}>
           <main className='App'>{children}</main>
