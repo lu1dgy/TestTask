@@ -72,7 +72,7 @@ const Home: NextPage = () => {
       />
       {completedTodosCount > 0 && (
         <h2>
-          {completedTodosCount > 1 ? `השלמת ${completedTodosCount} משימות` : 'השלמת משימה אחת'}{' '}
+          {completedTodosCount > 1 ? `השלמת ${completedTodosCount} משימות` : 'השלמת משימה אחת'}
         </h2>
       )}
     </>

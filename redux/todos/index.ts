@@ -34,9 +34,9 @@ const todosSlice = createSlice({
         timestamp: formatTimestamp(Date.now()),
         changes: [{ prev: null, current: newTodo }],
       };
-      state.todos.push(newTodo);
-      state.changes.push(change);
-      console.log(change);
+      state.todos = [...state.todos, newTodo];
+      state.changes = [...state.changes, change];
+      console.log(state.changes);
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
       const deletedTodoIndex = state.todos.findIndex((todo) => todo.id === action.payload);
@@ -47,9 +47,9 @@ const todosSlice = createSlice({
           timestamp: formatTimestamp(Date.now()),
           changes: [{ prev: deletedTodo, current: null }],
         };
-        state.todos.splice(deletedTodoIndex, 1);
-        state.changes.push(change);
-        console.log(change);
+        state.todos = state.todos.filter((_, index) => index !== deletedTodoIndex);
+        state.changes = [...state.changes, change];
+        console.log(state.changes);
       }
     },
     toggleTodo: (state, action: PayloadAction<string>) => {
@@ -61,9 +61,11 @@ const todosSlice = createSlice({
           timestamp: formatTimestamp(Date.now()),
           changes: [{ prev: toggledTodo, current: toggledTodo }],
         };
-        toggledTodo.isCompleted = !toggledTodo.isCompleted;
-        state.changes.push(change);
-        console.log(change);
+        state.changes = [...state.changes, change];
+        state.todos = state.todos.map((todo, index) =>
+          index === toggledTodoIndex ? { ...todo, isCompleted: !todo.isCompleted } : todo
+        );
+        console.log(state.changes);
       }
     },
     resetTodos: (state) => {
@@ -74,21 +76,20 @@ const todosSlice = createSlice({
         changes: prevTodos.map((todo) => ({ prev: todo, current: null })),
       };
       state.todos = [];
-      state.changes.push(change);
-      console.log(change);
+      state.changes = [...state.changes, change];
+      console.log(state.changes);
     },
     deleteCompletedTodos: (state) => {
       const completedTodos = state.todos.filter((todo) => todo.isCompleted);
       if (completedTodos.length > 0) {
-        const prevTodos = state.todos.slice();
         const change = {
           type: 'delete completed todos',
           timestamp: formatTimestamp(Date.now()),
           changes: completedTodos.map((todo) => ({ prev: todo, current: null })),
         };
         state.todos = state.todos.filter((todo) => !todo.isCompleted);
-        state.changes.push(change);
-        console.log(change);
+        state.changes = [...state.changes, change];
+        console.log(state.changes);
       }
     },
     setTodos: (state, action) => {
@@ -102,8 +103,8 @@ const todosSlice = createSlice({
         })),
       };
       state.todos = action.payload;
-      state.changes.push(change);
-      console.log(change);
+      state.changes = [...state.changes, change];
+      console.log(state.changes);
     },
     updateTodoText: (state, action: PayloadAction<{ id: string; text: string }>) => {
       const { id, text } = action.payload;
@@ -116,9 +117,11 @@ const todosSlice = createSlice({
           timestamp: formatTimestamp(Date.now()),
           changes: [{ prev: prevTodo, current: updatedTodo }],
         };
-        state.todos[updatedTodoIndex] = updatedTodo;
-        state.changes.push(change);
-        console.log(change);
+        state.todos = state.todos.map((todo, index) =>
+          index === updatedTodoIndex ? updatedTodo : todo
+        );
+        state.changes = [...state.changes, change];
+        console.log(state.changes);
       }
     },
   },
